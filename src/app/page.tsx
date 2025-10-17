@@ -25,29 +25,36 @@ const AnimatedText = ({
 
   const minDeletePercent = 0.15; // 15%
   const maxDeletePercent = 0.75; // 75%
-  const deleteStartIndex = Math.floor(text.length * (minDeletePercent + Math.random() * (maxDeletePercent - minDeletePercent)));
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
-if (isDeleting) {
-  interval = setInterval(() => {
-    let currentText = displayText;
-    if (currentText.length > deleteStartIndex) {
-      const removeCount = Math.floor(Math.random() * 3) + 1;
-      const newText = currentText.slice(0, Math.max(currentText.length - removeCount, deleteStartIndex));
-      setDisplayText(newText);
-    } else {
-      setIsDeleting(false);
-      setCanDelete(false);
-    }
-  }, deleteSpeed);
 
+    if (isDeleting) {
+      interval = setInterval(() => {
+        const currentText = displayText;
+
+        // Calculate deleteStartIndex inside the interval
+        const deleteStartIndex = Math.floor(
+          text.length * (minDeletePercent + Math.random() * (maxDeletePercent - minDeletePercent))
+        );
+
+        if (currentText.length > deleteStartIndex) {
+          const removeCount = Math.floor(Math.random() * 3) + 1; // delete 1-3 chars at a time
+          const newText = currentText.slice(
+            0,
+            Math.max(currentText.length - removeCount, deleteStartIndex)
+          );
+          setDisplayText(newText);
+        } else {
+          setIsDeleting(false);
+          setCanDelete(false);
+        }
+      }, deleteSpeed);
     } else {
-      // Typing until full text
       interval = setInterval(() => {
         if (displayText.length < text.length) {
           setDisplayText(text.slice(0, displayText.length + 1));
         } else if (!canDelete) {
-          // Fully typed, allow next deletion
           setCanDelete(true);
         }
       }, speed);
