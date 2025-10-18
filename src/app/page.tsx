@@ -22,32 +22,37 @@ const AnimatedText = ({
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
   const [canDelete, setCanDelete] = useState(true);
+  const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
 
-  const minDeletePercent = 0.15; // 15%
-  const maxDeletePercent = 0.75; // 75%
+  const minDeletePercent = 0.75;
+  const maxDeletePercent = 0.99;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
 
     if (isDeleting) {
       interval = setInterval(() => {
-        const currentText = displayText;
+        if (deleteTarget === null) {
+          // Pick a new target index for this deletion cycle
+          const newTarget = Math.floor(
+            text.length * (minDeletePercent + Math.random() * (maxDeletePercent - minDeletePercent))
+          );
+          setDeleteTarget(newTarget);
+          return; // wait for next tick
+        }
 
-        // Calculate deleteStartIndex inside the interval
-        const deleteStartIndex = Math.floor(
-          text.length * (minDeletePercent + Math.random() * (maxDeletePercent - minDeletePercent))
-        );
-
-        if (currentText.length > deleteStartIndex) {
-          const removeCount = Math.floor(Math.random() * 3) + 1; // delete 1-3 chars at a time
-          const newText = currentText.slice(
+        if (displayText.length > deleteTarget) {
+          const removeCount = Math.floor(Math.random() * 3) + 1; // delete 1–3 chars per tick
+          const newText = displayText.slice(
             0,
-            Math.max(currentText.length - removeCount, deleteStartIndex)
+            Math.max(displayText.length - removeCount, deleteTarget)
           );
           setDisplayText(newText);
         } else {
+          // Deletion finished
           setIsDeleting(false);
           setCanDelete(false);
+          setDeleteTarget(null);
         }
       }, deleteSpeed);
     } else {
@@ -61,9 +66,8 @@ const AnimatedText = ({
     }
 
     return () => clearInterval(interval);
-  }, [displayText, isDeleting, canDelete, text, speed, deleteSpeed]);
+  }, [displayText, isDeleting, canDelete, text, speed, deleteSpeed, deleteTarget]);
 
-  // Trigger deletion only if allowed
   useEffect(() => {
     const timeout = setInterval(() => {
       if (canDelete && !isDeleting) {
@@ -75,6 +79,7 @@ const AnimatedText = ({
 
   return <span>{displayText}</span>;
 };
+
 
 /* ============================= */
 /*          MAIN PAGE            */
@@ -89,7 +94,7 @@ interface Event {
 export default function FintechPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const fullBlurb =
-    "Connecting students with fintech innovations through workshops, speaker series, and hackathons. Explore the future of finance and technology!";
+    "Connecting students with fintech innovations through workshops, speakers, and partnerships with FinTech firms. Explore the future of finance and technology!";
 
   useEffect(() => {
     // Fetch upcoming events (replace API key and calendar ID)
@@ -100,6 +105,13 @@ export default function FintechPage() {
       .then((data) => setEvents(data.items || []))
       .catch((err) => console.error("Error fetching events:", err));
   }, []);
+
+  const partners = [
+    { name: "Moov", logo: "/partners/moov.png", url: "https://moov.io/", scale: 1.3},
+    { name: "Barings", logo: "/partners/barings.png", url: "https://www.barings.com", scale: 1.4},
+    { name: "Wellington Management", logo: "/partners/wm.png", url: "https://www.wellington.com/en", scale: 2.6},
+    { name: "QMA", logo: "/partners/qma.jpg", url: "https://www.pgim.com/it/en/borrower", scale : .9},
+  ];
 
   return (
     <main className="fintech-page">
@@ -130,41 +142,84 @@ export default function FintechPage() {
 
       {/* WHAT WE DO */}
       <section id="what-we-do" className="section section-1 px-10">
-        <h2 className="text-3xl font-semibold mb-4">What We Do</h2>
+        <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">What We Do</h2>
         <p className="text-gray-300 text-lg leading-relaxed">
           Fintech@Brown connects students with finance and tech innovations, hosts workshops, speaker series, and hackathons to prepare students for careers in fintech. We aim to build a vibrant community at the intersection of finance and technology.
         </p>
       </section>
 
       <hr className="section-separator my-12 border-gray-700" />
+      {/* PARTNERS */}
+      <section id="partners" className="section section-1 px-10 text-center">
+        <h2 className="text-3xl font-semibold mb-6 font-orbitron text-cyan-400">Inudstry Partners</h2>
+        <p className="text-gray-300 text-lg mb-10">
+          We’re proud to collaborate with leaders in fintech and financial innovation.
+        </p>
+       <div className="partners-grid">
+          {partners.map((partner) => (
+            <a
+              key={partner.name}
+              href={partner.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="partner-link"
+            >
+              <div
+                className="partner-logo-wrapper"
+                style={{ transform: `scale(${partner.scale ?? 1})` }}
+              >
+                <Image
+                  src={partner.logo}
+                  alt={`${partner.name} logo`}
+                  width={400}
+                  height={200}
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    maxHeight: '6rem',
+                    objectFit: 'contain',
+                  }}
+                  className="partner-logo"
+                />
+              </div>
+            </a>
+          ))}
+        </div>
+
+
+
+      </section>
+
+      <hr className="section-separator my-12 border-gray-700" />
+
 
       {/* EVENTS */}
-      <section id="events" className="section section-2 px-10">
-        <h2 className="text-3xl font-semibold mb-4">Upcoming Events</h2>
-        {events.length > 0 ? (
-          <ul className="event-list list-disc list-inside text-gray-300">
-            {events.map((evt) => (
-              <li key={evt.id} className="mb-2">
-                <a href={evt.htmlLink} target="_blank" rel="noopener noreferrer" className="underline hover:text-white">
-                  {evt.summary} - {evt.start.dateTime ? new Date(evt.start.dateTime).toLocaleString() : evt.start.date}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">Loading upcoming events...</p>
-        )}
-      </section>
+      <section id="events" className="section section-2">
+          <h2 className="text-3xl font-semibold mb-6 font-orbitron text-cyan-400">Upcoming Events</h2>
+          <div className="calendar-container">
+            <iframe
+              src="https://calendar.google.com/calendar/embed?src=c_6bb47d014cb7ae7388267f91b0d4c497579dfdc19264dc801371924ef0a80639%40group.calendar.google.com&ctz=America%2FNew_York"
+              style={{
+                border: 0,
+                width: "80%",
+                height: "600px",
+                borderRadius: "20px",
+              }}
+              frameBorder="0"
+              scrolling="no"
+            ></iframe>
+          </div>
+        </section>
 
       <hr className="section-separator my-12 border-gray-700" />
 
       {/* EBOARD MEMBERS */}
       <section id="eboard" className="section section-3 px-10">
-        <h2 className="text-3xl font-semibold mb-8">E-Board Members</h2>
+        <h2 className="text-3xl font-semibold mb-8 font-orbitron text-cyan-400">E-Board Members</h2>
         <div className="eboard-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {[
             { name: "Matias Bronner", role: "Treasurer", image: "/eboard1.jpg" },
-            { name: "Jane Doe", role: "President", image: "/eboard2.jpg" },
+            { name: "Farah Akbari", role: "President", image: "/eboard2.jpg" },
             { name: "John Smith", role: "VP Events", image: "/eboard3.jpg" },
             { name: "Alice Lee", role: "VP Tech", image: "/eboard4.jpg" },
           ].map((member, idx) => (
@@ -181,12 +236,14 @@ export default function FintechPage() {
 
       {/* CONTACT */}
       <section id="contact" className="section section-4 px-10">
-        <h2 className="text-3xl font-semibold mb-4">Contact Us</h2>
+        <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">Contact Us</h2>
         <p className="text-gray-300 mb-2">Interested in joining or collaborating? Reach out via email:</p>
         <a href="mailto:fintech@brown.edu" className="contact-link text-blue-400 hover:text-blue-300">
           fintech@brown.edu
         </a>
       </section>
+
+
 
     </main>
   );

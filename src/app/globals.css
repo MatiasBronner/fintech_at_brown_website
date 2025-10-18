@@ -13,6 +13,9 @@
   --section-gradient-3: linear-gradient(135deg, #0f0, #0ff);
   --section-gradient-4: linear-gradient(135deg, #f0f, #f00);
 }
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
 
 /* BODY */
 body {
@@ -193,4 +196,44 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   .section { padding: 3rem 1rem; }
+}
+/* PARTNERS SECTION */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem 6rem;
+  justify-items: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.partner-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partner-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;         /* uniform layout cell */
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.partner-logo {
+  height: auto;
+  width: auto;
+  max-height: 6rem;
+  max-width: 100%;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(0.85);
+  transition: all 0.4s ease;
+}
+
+.partner-logo:hover {
+  filter: grayscale(0%) brightness(1.2) drop-shadow(0 0 15px #00dfff);
+  transform: scale(1.05);
 }
