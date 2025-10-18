@@ -159,19 +159,34 @@ body {
 /* EBOARD */
 .eboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-items: center;
 }
 
 .eboard-card {
-  padding: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.eboard-card:hover {
+  transform: scale(1.08);
 }
 
 .eboard-image {
   border-radius: 50%;
   border: 2px solid var(--primary-color);
-  margin-bottom: 0.5rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+/* When you click (active), add a glowing shine */
+.eboard-card:hover .eboard-image {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(255, 0, 255, 0.6);
+  transform: scale(1.1);
+  border-color: #fff;
 }
 
 /* CONTACT */
@@ -236,4 +251,66 @@ body {
 .partner-logo:hover {
   filter: grayscale(0%) brightness(1.2) drop-shadow(0 0 15px #00dfff);
   transform: scale(1.05);
+}
+/* NAVBAR */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  border-bottom: 1px solid var(--primary-color);
+  backdrop-filter: blur(6px);
+  z-index: 1000;
+  padding: 0.5rem 2rem; /* much thinner bar */
+}
+
+.navbar-container {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem; /* smaller but crisp */
+  font-weight: 700;
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-color);
+  letter-spacing: 0.5px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1.8rem; /* tighter link spacing */
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem; /* smaller link text */
+  font-weight: 500;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar-links a:hover {
+  color: var(--primary-color);
+  text-shadow: 0 0 8px var(--primary-color);
+}
+
+/* Adjust scroll offset for the new smaller bar */
+section {
+  scroll-margin-top: 70px;
+}
+
+/* Global smooth scroll */
+html {
+  scroll-behavior: smooth;
 }

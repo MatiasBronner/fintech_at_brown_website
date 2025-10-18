@@ -114,6 +114,23 @@ export default function FintechPage() {
   ];
 
   return (
+      <>
+      {/* NAVBAR */}
+      <nav className="navbar">
+        <div className="navbar-container">
+          <div className="navbar-left">
+            <h1 className="navbar-logo">FinTech@Brown</h1>
+          </div>
+          <ul className="navbar-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#what-we-do">What We Do</a></li>
+            <li><a href="#partners">Partners</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#eboard">E-Board</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
     <main className="fintech-page">
 
       {/* HEADER */}
@@ -144,7 +161,10 @@ export default function FintechPage() {
       <section id="what-we-do" className="section section-1 px-10">
         <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">What We Do</h2>
         <p className="text-gray-300 text-lg leading-relaxed">
-          Fintech@Brown connects students with finance and tech innovations, hosts workshops, speaker series, and hackathons to prepare students for careers in fintech. We aim to build a vibrant community at the intersection of finance and technology.
+          FinTech@Brown is a student organization dedicated to exploring the intersection of finance and technology. 
+          We meet biweekly to learn from industry leaders, connect with peers, and gain hands-on experience in the fintech space. 
+          From firm visits to speaker events, we aim to empower students to break into and shape the future of financial technology. 
+          Interested? Just show up — everyone’s welcome!
         </p>
       </section>
 
@@ -187,11 +207,9 @@ export default function FintechPage() {
         </div>
 
 
-
       </section>
 
       <hr className="section-separator my-12 border-gray-700" />
-
 
       {/* EVENTS */}
       <section id="events" className="section section-2">
@@ -216,20 +234,28 @@ export default function FintechPage() {
       {/* EBOARD MEMBERS */}
       <section id="eboard" className="section section-3 px-10">
         <h2 className="text-3xl font-semibold mb-8 font-orbitron text-cyan-400">E-Board Members</h2>
-        <div className="eboard-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+
+         <div className="eboard-grid">
           {[
-            { name: "Matias Bronner", role: "Treasurer", image: "/eboard1.jpg" },
-            { name: "Farah Akbari", role: "President", image: "/eboard2.jpg" },
-            { name: "John Smith", role: "VP Events", image: "/eboard3.jpg" },
-            { name: "Alice Lee", role: "VP Tech", image: "/eboard4.jpg" },
+            { name: "Matias Bronner", role: "Treasurer", image: "/eboard/eboard1.jpg" },
+            { name: "Farah Akbari", role: "Co-President", image: "/eboard/eboard2.jpg" },
+            { name: "Daniel Shirazi", role: "Co-President", image: "/eboard/eboard3.jpg" },
+            { name: "William Rosenberg", role: "Head of Education", image: "/eboard/eboard4.jpg" },
+            { name: "Elena Zhang", role: "Head of Communication", image: "/eboard/eboard5.jpg" },
+            { name: "Sophia Chon", role: "", image: "/eboard/eboard6.jpg" },
+            { name: "Nikolas Nemergutg", role: "Head of Tech", image: "/eboard/eboard7.jpg" },
+            { name: "Ahmad Milad Taib", role: "", image: "/eboard/eboard8.jpg" },
+            { name: "Ryder Swenson", role: "", image: "/eboard/eboard9.jpg" },
+            { name: "Vidula Mannem", role: "", image: "/eboard/eboard10.jpg" }
           ].map((member, idx) => (
             <div key={idx} className="eboard-card flex flex-col items-center text-center">
-              <Image src={member.image} alt={member.name} width={150} height={150} className="eboard-image rounded-full mb-4" />
+              <Image src={member.image} alt={member.name} width={200} height={200} className="eboard-image rounded-full mb-4" />
               <h3 className="text-xl font-semibold">{member.name}</h3>
               <p className="text-gray-300">{member.role}</p>
             </div>
           ))}
         </div>
+
       </section>
 
       <hr className="section-separator my-12 border-gray-700" />
@@ -237,14 +263,16 @@ export default function FintechPage() {
       {/* CONTACT */}
       <section id="contact" className="section section-4 px-10">
         <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">Contact Us</h2>
-        <p className="text-gray-300 mb-2">Interested in joining or collaborating? Reach out via email:</p>
-        <a href="mailto:fintech@brown.edu" className="contact-link text-blue-400 hover:text-blue-300">
-          fintech@brown.edu
+        <p className="text-gray-300 mb-2">Interested in joining or collaborating? Reach out through this form!:</p>
+        <a href="https://docs.google.com/forms/d/1mFutP-T7ITfZpBku9AylUcfa91S2zhRA1iKA32hKK90" className="contact-link text-blue-400 hover:text-blue-300">
+          https://tinyurl.com/fintechatbrown-form
         </a>
       </section>
 
 
-
+    
     </main>
+    </>
+    
   );
 }
