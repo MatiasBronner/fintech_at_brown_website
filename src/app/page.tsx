@@ -259,17 +259,49 @@ export default function FintechPage() {
       </section>
 
       <hr className="section-separator my-12 border-gray-700" />
+    {/* CONTACT */}
+    <section id="contact" className="section section-4 px-10 text-center">
+      <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">
+        Contact Us
+      </h2>
+      <p className="text-gray-300 mb-8 text-lg">
+        Interested in joining or collaborating? Reach out through our form, and follow us on social media:
+      </p>
 
-      {/* CONTACT */}
-      <section id="contact" className="section section-4 px-10">
-        <h2 className="text-3xl font-semibold mb-4 font-orbitron text-cyan-400">Contact Us</h2>
-        <p className="text-gray-300 mb-2">Interested in joining or collaborating? Reach out through this form!:</p>
-        <a href="https://docs.google.com/forms/d/1mFutP-T7ITfZpBku9AylUcfa91S2zhRA1iKA32hKK90" className="contact-link text-blue-400 hover:text-blue-300">
-          https://tinyurl.com/fintechatbrown-form
+      <div className="contact-bubbles flex flex-wrap justify-center gap-6">
+        {/* Google Form */}
+        <a
+          href="https://docs.google.com/forms/d/1mFutP-T7ITfZpBku9AylUcfa91S2zhRA1iKA32hKK90"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contact-bubble"
+        >
+           <Image
+            src="/form.png"  // <-- put an Instagram icon in public/icons/
+            alt="Form"
+            width={24}
+            height={24}
+          />
+          <span className="text-xl font-semibold">Contact Form</span>
         </a>
-      </section>
 
-
+        {/* Instagram */}
+        <a
+          href="https://www.instagram.com/fintech.at.brown/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="contact-bubble flex items-center gap-3"
+        >
+          <Image
+            src="/instagram.png"  // <-- put an Instagram icon in public/icons/
+            alt="Instagram"
+            width={24}
+            height={24}
+          />
+          <span className="text-xl font-semibold">@fintech.at.brown</span>
+        </a>
+      </div>
+    </section>
     
     </main>
     </>
