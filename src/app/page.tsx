@@ -112,6 +112,8 @@ export default function FintechPage() {
     { name: "Wellington Management", logo: "/partners/wm.png", url: "https://www.wellington.com/en", scale: 2.6},
     { name: "QMA", logo: "/partners/qma.jpg", url: "https://www.pgim.com/it/en/borrower", scale : .9},
   ];
+  const [menuOpen, setMenuOpen] = useState(false);
+
 
   return (
       <>
@@ -121,16 +123,30 @@ export default function FintechPage() {
           <div className="navbar-left">
             <h1 className="navbar-logo">FinTech@Brown</h1>
           </div>
-          <ul className="navbar-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#what-we-do">What We Do</a></li>
-            <li><a href="#partners">Partners</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#eboard">E-Board</a></li>
-            <li><a href="#contact">Contact</a></li>
+
+          {/* Hamburger button */}
+          <button
+            className="hamburger"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className={`bar ${menuOpen ? "open" : ""}`}></span>
+            <span className={`bar ${menuOpen ? "open" : ""}`}></span>
+            <span className={`bar ${menuOpen ? "open" : ""}`}></span>
+          </button>
+
+          {/* Navbar links */}
+          <ul className={`navbar-links ${menuOpen ? "active" : ""}`}>
+            <li><a href="#home" onClick={() => setMenuOpen(false)}>Home</a></li>
+            <li><a href="#what-we-do" onClick={() => setMenuOpen(false)}>What We Do</a></li>
+            <li><a href="#partners" onClick={() => setMenuOpen(false)}>Partners</a></li>
+            <li><a href="#events" onClick={() => setMenuOpen(false)}>Events</a></li>
+            <li><a href="#eboard" onClick={() => setMenuOpen(false)}>E-Board</a></li>
+            <li><a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a></li>
           </ul>
         </div>
       </nav>
+
     <main className="fintech-page">
 
       {/* HEADER */}
@@ -240,13 +256,15 @@ export default function FintechPage() {
             { name: "Matias Bronner", role: "Treasurer", image: "/eboard/eboard1.jpg" },
             { name: "Farah Akbari", role: "Co-President", image: "/eboard/eboard2.jpg" },
             { name: "Daniel Shirazi", role: "Co-President", image: "/eboard/eboard3.jpg" },
-            { name: "William Rosenberg", role: "Head of Education", image: "/eboard/eboard4.jpg" },
+            { name: "William Rosenberg", role: "Head of Curriculum", image: "/eboard/eboard4.jpg" },
             { name: "Elena Zhang", role: "Head of Communication", image: "/eboard/eboard5.jpg" },
-            { name: "Sophia Chon", role: "", image: "/eboard/eboard6.jpg" },
+            { name: "Sophia Chon", role: "Head of Social Events", image: "/eboard/eboard6.jpg" },
             { name: "Nikolas Nemergutg", role: "Head of Tech", image: "/eboard/eboard7.jpg" },
-            { name: "Ahmad Milad Taib", role: "", image: "/eboard/eboard8.jpg" },
-            { name: "Ryder Swenson", role: "", image: "/eboard/eboard9.jpg" },
-            { name: "Vidula Mannem", role: "", image: "/eboard/eboard10.jpg" }
+            { name: "Ahmad Milad Taib", role: "Co-Head of Outreach", image: "/eboard/eboard8.jpg" },
+            { name: "Ryder Swenson", role: "Co-Head of Outreach  ", image: "/eboard/eboard9.jpg" },
+            { name: "Vidula Mannem", role: "Co-Head of Education", image: "/eboard/eboard10.jpg" },
+            { name: "Armaan Bhasin", role: "Co-Head of Education", image: "/eboard/eboard11.jpg" }
+
           ].map((member, idx) => (
             <div key={idx} className="eboard-card flex flex-col items-center text-center">
               <Image src={member.image} alt={member.name} width={200} height={200} className="eboard-image rounded-full mb-4" />

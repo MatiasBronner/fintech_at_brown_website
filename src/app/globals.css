@@ -278,12 +278,14 @@ body {
 }
 
 .navbar-container {
+  position: relative; /* <--- add this line */
   width: 100%;
   max-width: 1400px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 
 .navbar-logo {
   font-family: 'Orbitron', sans-serif;
@@ -324,4 +326,81 @@ section {
 /* Global smooth scroll */
 html {
   scroll-behavior: smooth;
+}
+/* ------------------------------- */
+/*     RESPONSIVE NAVBAR MENU      */
+/* ------------------------------- */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.hamburger .bar {
+  height: 3px;
+  width: 100%;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Animation when open */
+.hamburger .bar.open:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.hamburger .bar.open:nth-child(2) {
+  opacity: 0;
+}
+.hamburger .bar.open:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Small-screen menu layout */
+@media (max-width: 900px) {
+  /* Hide horizontal nav links */
+  .navbar-links {
+    display: none;
+  }
+
+  /* Show hamburger button */
+  .hamburger {
+    display: flex;
+    position: absolute;
+    right: 1.5rem;
+    top: 0.8rem;
+  }
+
+  /* Slide-out mobile menu */
+  .navbar-links.active {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    height: 100vh;
+    width: 70%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    padding-top: 6rem;
+    gap: 2rem;
+    transform: translateX(0);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+  }
+
+  .navbar-links li a {
+    font-size: 1.2rem;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+  }
 }
