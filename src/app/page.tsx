@@ -84,27 +84,10 @@ const AnimatedText = ({
 /* ============================= */
 /*          MAIN PAGE            */
 /* ============================= */
-interface Event {
-  id: string;
-  summary: string;
-  start: { dateTime?: string; date?: string };
-  htmlLink: string;
-}
-
 export default function FintechPage() {
-  const [events, setEvents] = useState<Event[]>([]);
   const fullBlurb =
     "Connecting students with fintech innovations through workshops, speakers, and partnerships with FinTech firms. Explore the future of finance and technology!";
 
-  useEffect(() => {
-    // Fetch upcoming events (replace API key and calendar ID)
-    fetch(
-      `https://www.googleapis.com/calendar/v3/calendars/YOUR_CALENDAR_ID/events?key=YOUR_API_KEY&timeMin=${new Date().toISOString()}&singleEvents=true&orderBy=startTime`
-    )
-      .then((res) => res.json())
-      .then((data) => setEvents(data.items || []))
-      .catch((err) => console.error("Error fetching events:", err));
-  }, []);
 
   const partners = [
     { name: "Moov", logo: "/partners/moov.png", url: "https://moov.io/", scale: 1.3},
@@ -187,7 +170,7 @@ export default function FintechPage() {
       <hr className="section-separator my-12 border-gray-700" />
       {/* PARTNERS */}
       <section id="partners" className="section section-1 px-10 text-center">
-        <h2 className="text-3xl font-semibold mb-6 font-orbitron text-cyan-400">Inudstry Partners</h2>
+        <h2 className="text-3xl font-semibold mb-6 font-orbitron text-cyan-400">Industry Partners</h2>
         <p className="text-gray-300 text-lg mb-10">
           We’re proud to collaborate with leaders in fintech and financial innovation.
         </p>
